@@ -1,0 +1,59 @@
+{% load static %}
+<div class="shares">
+    <div id="ovation_section">
+        {% if request.user.is_authenticated %}
+        <form action="." method="POST">
+            {% csrf_token %}
+                {% if is_ovated %}
+                <button name="post_id" value="{{ post.id }}" id="ovation" type="submit">
+                    <img src="{% static 'blog/images/boo.svg' %}" alt="boo">
+                </button>
+                {% else %}
+                <button name="post_id" value="{{ post.id }}" id="ovation" type="submit">
+                    <img src="{% static 'blog/images/clap.svg' %}" alt="clap">
+                </button>
+                {% endif %}
+        </form>
+        {% else %}
+        <form class="post-form" action="{% url 'blog:ovation' %}" method="POST">
+            {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ post.id }}">
+                    <img src="{% static 'blog/images/clap.svg' %}" alt="clap">
+                </button>
+        </form>
+        {% endif %}
+        <p class="mr-4">{{ post.ovation.count }} ovation{{ post.ovation.count|pluralize }}</p>
+    </div>
+    <ul class="shares-social">
+        <li class="tooltip">
+            <a href="#">
+                <img src="{% static 'blog/images/facebook.svg' %}" alt="facebook">
+            </a>
+            <span class="tooltiptext">Share on Facebook</span>
+        </li>
+        <li class="tooltip">
+            <a href="#">
+                <img src="{% static 'blog/images/email.svg' %}" alt="email">
+            </a>
+            <span class="tooltiptext">Share via Email</span>
+        </li>
+        <li class="tooltip">
+            <a href="#">
+                <img src="{% static 'blog/images/twitter.svg' %}" alt="twitter">
+            </a>
+            <span class="tooltiptext">Share on Twitter</span>
+        </li>
+        <li class="tooltip">
+            <a href="#">
+                <img src="{% static 'blog/images/whatsapp.svg' %}" alt="WhatsApp">
+            </a>
+            <span class="tooltiptext">Share on WhatsApp</span>
+        </li>
+        <li class="tooltip">
+            <a href="#">
+                <img src="{% static 'blog/images/linkedin.svg' %}" alt="linkedin">
+            </a>
+            <span class="tooltiptext">Share on LinkedIn</span>
+        </li>
+    </ul>
+</div>

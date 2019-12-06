@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block header %}{% endblock header %}
+{% block content %}
+<!-- site content
+        ================================================== -->
+{% load static %}
+<div class="s-content">
+    <div class="masonry-wrap">
+        <div class="masonry">
+            <div class="grid-sizer"></div>
+            <article class="masonry__brick entry format-standard animate-this">
+                <div class="entry__thumb">
+                    <a href="{% url 'blog:blog-index' %}" class="entry__thumb-link">
+                        <img id="Layer_1" src="{% static 'blog/images/logo.svg' %}" alt="Homepage">
+                    </a>
+                </div>
+                <div class="entry__text">
+                    <div class="content__page-header">
+                        <h1 class="display-1">
+                            Login
+                        </h1>
+                    </div> <!-- end content__page-header -->
+                    <div class="column tab-full">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert-box alert-box--{{ message.tags }} hideit">
+                                    {{ message }}
+                                    <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <form name="contactForm" id="contactForm" method="post" action="" autocomplete="on" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset>
+                            {% if form.non_field_errors %}
+                            <div class="alert-box alert-box--error hideit">
+                                {{ form.non_field_errors }}
+                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                            </div>
+                            {% endif %}
+                            {% for field in form %}
+                            <div class="form-field">
+                                {{ form.media }}
+                                {# {{ field.label }} #}
+                                {{ field }}
+                            </div>
+                            {% if field.errors %}
+                            <div class="alert-box alert-box--error hideit">
+                                {{ field.errors }}
+                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            <input name="submit" id="submit" class="btn btn-wide btn--large full-width" value="Login" type="submit">
+                        </fieldset>
+                    </form> <!-- end form -->
+                    <p>
+                        Forgot Password? <a class="btn btn--small" href="{% url 'account:password_reset' %}">Recover here.<a>
+                                Need an account? <a class="btn btn--small" href="{% url 'account:register' %}">Get one here.<a>
+                    </p>
+                </div>
+            </article> <!-- end article -->
+            <article class="masonry__brick entry format-standard animate-this">
+                <div class="entry__thumb">
+                    <a href="{% url 'blog:blog-index' %}" class="entry__thumb-link">
+                        <img id="Layer_1" src="{% static 'blog/images/logo.svg' %}" alt="Homepage">
+                    </a>
+                </div>
+                <div class="entry__text">
+                    <div class="content__page-header">
+                        <h1 class="display-1">
+                            Social Login
+                        </h1>
+                    </div> <!-- end content__page-header -->
+                    <p class="lead drop-cap">
+                        For the Ease of authentication, Devc.com provides the following social authentications. Within a few clicks, you are in.
+                    </p>
+                    <a href="#">
+                        <button type="button" class="submit btn btn--primary btn-wide btn--large full-width">Github</button>
+                    </a>
+                    <a href="#">
+                        <button type="button" class="submit btn btn--danger btn-wide btn--large full-width">Google+</button>
+                    </a>
+                </div>
+            </article> <!-- end article -->
+        </div> <!-- end masonry -->
+    </div> <!-- end masonry-wrap -->
+</div> <!-- end s-content -->
+{% endblock content %}
