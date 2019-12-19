@@ -224,6 +224,12 @@ p.lead {
 
 }
 
+pre {
+  /*padding: 2.4rem 3.2rem 3.2rem;
+  background: #efefef;*/
+  overflow-x: auto;
+}
+
 em,
 i,
 strong,
@@ -241,7 +247,7 @@ i {
 strong,
 b {
   font-family: "IBM Plex Sans", sans-serif;
-  font-weight: 700;
+  font-weight: 1000;
 }
 
 small {
@@ -314,42 +320,6 @@ abbr {
   color: #7e7e7e;
 }
 
-var,
-kbd,
-samp,
-code,
-pre {
-  font-family: Consolas, "Andale Mono", Courier, "Courier New", monospace;
-}
-
-pre {
-  padding: 2.4rem 3.2rem 3.2rem;
-  background: #efefef;
-  overflow-x: auto;
-}
-
-code {
-  font-size: 1.4rem;
-  margin: 0 0.2rem;
-  padding: 0.4rem 0.8rem;
-  white-space: nowrap;
-  background: #efefef;
-  border: 1px solid #d3d3d3;
-  color: #000000;
-  border-radius: 3px;
-}
-
-pre > code {
-  display: block;
-  white-space: pre;
-  line-height: 2;
-  padding: 0;
-  margin: 0;
-}
-
-pre.prettyprint > code {
-  border: none;
-}
 
 del {
   text-decoration: line-through;

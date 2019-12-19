@@ -1,0 +1,40 @@
+{% extends 'portbase.html' %}
+{% block header %}{% endblock header %}
+{% block content %}
+{% load static %}
+<!-- intro
+    ================================================== -->
+<section id="intro" class="s-intro target-section">
+    <div class="row intro-content">
+        <div class="column large-9 mob-full intro-text">
+            <h3>Hello, I'm {{ intro.user.get_full_name }}</h3>
+            <h1>{{ intro.title }}</h1>
+        </div>
+        <div class="intro-scroll">
+            <a href="#about" class="intro-scroll-link smoothscroll">
+                Scroll For More
+            </a>
+        </div>
+        <div class="intro-grid"></div>
+        <div class="intro-pic" style="background-image: url({{ intro.user.profile.profile_pics.url }});"></div>
+    </div> <!-- end row -->
+</section> <!-- end intro -->
+<section id="styles" class="s-styles" style="background: white;">
+    <div class="row narrow section-intro add-bottom">
+        <div class="column large-full">
+            <h3>Work Experience</h3>
+            <form method="post" action="" autocomplete="on" enctype="multipart/form-data">
+            	{% csrf_token %}
+            	{{ form.media }}
+            	{% for field in form %}
+                <div>
+                    <label for="sampleInput">{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <input class="btn--primary full-width" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock content %}

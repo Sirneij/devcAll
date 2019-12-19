@@ -26,7 +26,7 @@
                             {% if user_form.non_field_errors %}
                             <div class="alert-box alert-box--error hideit">
                                 {{ user_form.non_field_errors }}
-                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                                <i class="fa alert-box__close" aria-hidden="true"></i>
                             </div>
                             {% endif %}
                             {% for field in user_form %}
@@ -38,7 +38,7 @@
                             {% if field.errors %}
                             <div class="alert-box alert-box--error hideit">
                                 {{ field.errors }}
-                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                                <i class="fa alert-box__close" aria-hidden="true"></i>
                             </div>
                             {% endif %}
                             {% endfor %}

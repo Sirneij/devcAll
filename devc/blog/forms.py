@@ -2,14 +2,17 @@ from .models import Comment
 from django import forms
 from .models import Post
 from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.widgets import CKEditorWidget
 
 
 class CommentForm(forms.ModelForm):
-    body = RichTextUploadingField()
-
+    #Hidden value to get a child's parent
+    content = forms.CharField(required=True, widget=CKEditorWidget(config_name='awesome_ckeditor'))
+    parent = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'parent'}), required=False)
+    
     class Meta:
         model = Comment
-        fields = ('body',)
+        fields = ['content',]
 
 
 class PostForm(forms.ModelForm):

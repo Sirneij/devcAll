@@ -13,10 +13,12 @@ django-contrib-comments==1.9.2
 django-js-asset==1.2.2
 django-taggit==1.1.0
 django-threadedcomments==1.2
+djangocodemirror==2.1.0
 hyperlink==19.0.0
 idna==2.8
 incremental==17.5.0
 Pillow==6.2.1
+psycopg2==2.8.4
 pyasn1==0.4.8
 pyasn1-modules==0.2.7
 pycparser==2.19

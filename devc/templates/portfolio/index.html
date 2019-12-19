@@ -1,0 +1,314 @@
+{% extends 'portbase.html' %}
+{% block header %}{% endblock header %}
+{% block content %}
+{% load static %}
+<!-- intro
+    ================================================== -->
+<section id="intro" class="s-intro target-section">
+    <div class="row intro-content">
+        <div class="column large-9 mob-full intro-text">
+            <h3>Hello, I'm {{ intro.user.get_full_name }}</h3>
+            <h1>{{ intro.title }}</h1>
+        </div>
+        <div class="intro-scroll">
+            <a href="#about" class="intro-scroll-link smoothscroll">
+                Scroll For More
+            </a>
+        </div>
+        <div class="intro-grid"></div>
+        <div class="intro-pic" style="background-image: url({{ intro.user.profile.profile_pics.url }});"></div>
+    </div> <!-- end row -->
+</section> <!-- end intro -->
+<!-- about
+    ================================================== -->
+<section id="about" class="s-about target-section">
+    <div class="about-me">
+        <div class="row heading-block" data-aos="fade-up">
+            <div class="column large-full">
+                <h2 class="section-heading">About Me</h2>
+            </div>
+        </div>
+        <div class="row about-me__content" data-aos="fade-up">
+            <div class="column large-full about-me__text">
+                <p>
+                    {{ intro.user.profile.bio|safe }}
+                </p>
+                {% if request.user == intro.user %}
+                <p class="entry__tags">
+                    <span class="entry__tag-list">
+                        <a href="#">Update</a>
+                        <a href="#">Delete</a>
+                    </span>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row about-me__buttons">
+            <div class="column large-half tab-full" data-aos="fade-up">
+                <a href="#0" class="btn btn--stroke full-width">Hire Me</a>
+            </div>
+            <div class="column large-half tab-full" data-aos="fade-up">
+                <a href="#0" class="btn btn--primary full-width">Download CV</a>
+            </div>
+        </div>
+    </div> <!-- end about-me -->
+    <div class="about-experience">
+        <div class="row heading-block" data-aos="fade-up">
+            <div class="column large-full">
+                <h2 class="section-heading">Work & Education</h2>
+            </div>
+        </div>
+        <div class="row about-experience__timeline">
+            <div class="column large-half tab-full" data-aos="fade-up">
+                <div class="timeline">
+                    <div class="timeline__icon-wrap">
+                        <span class="timeline__icon timeline__icon--work"></span>
+                    </div>
+                    {% for experience in experiences %}
+                    <div class="timeline__block">
+                        <div class="timeline__bullet"></div>
+                        <div class="timeline__header">
+                            <p class="timeline__timeframe">{{ experience.commencement }} - {{ experience.end }}</p>
+                            <h3 class="item-title">{{ experience.company_name }}</h3>
+                            <h5>{{ experience.position }}</h5>
+                        </div>
+                        <div class="timeline__desc">
+                            <p>{{ experience.get_markdown }}</p>
+                        </div>
+                    </div>
+                    {% if request.user == intro.user %}
+                    <p class="entry__tags">
+                        <span class="entry__tag-list">
+                            <a href="{% url 'portfolio:experience_update' intro.user experience.id %}">Update</a>
+                            <a href="{% url 'portfolio:experience_delete' intro.user experience.id %}">Delete</a>
+                        </span>
+                    </p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% if request.user == intro.user %}
+                <p class="entry__tags">
+                    <span class="entry__tag-list">
+                        <a href="{% url 'portfolio:experience_new' intro.user %}">Add Experience</a>
+                    </span>
+                </p>
+                {% endif %}
+            </div>
+            <div class="column large-half tab-full" data-aos="fade-up">
+                <div class="timeline">
+                    <div class="timeline__icon-wrap">
+                        <span class="timeline__icon timeline__icon--education"></span>
+                    </div>
+                    {% for education in educations %}
+                    <div class="timeline__block">
+                        <div class="timeline__bullet"></div>
+                        <div class="timeline__header">
+                            <p class="timeline__timeframe">{{ education.commencement }} - {{ education.end }}</p>
+                            <h3 class="item-title">{{ education.school_name }}</h3>
+                            <h5>{{ education.degree_type|capfirst }}</h5>
+                        </div>
+                        <div class="timeline__desc">
+                            <p>{{ education.get_markdown }}</p>
+                        </div>
+                    </div>
+                    {% if request.user == intro.user %}
+                    <p class="entry__tags">
+                        <span class="entry__tag-list">
+                            <a href="{% url 'portfolio:education_update' intro.user education.id %}">Update</a>
+                            <a href="{% url 'portfolio:education_delete' intro.user education.id %}">Delete</a>
+                        </span>
+                    </p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% if request.user == intro.user %}
+                <p class="entry__tags">
+                    <span class="entry__tag-list">
+                        <a href="{% url 'portfolio:education_new' intro.user %}">Add Education</a>
+                    </span>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div> <!-- end about-experience -->
+</section> <!-- end s-about -->
+<!-- services
+    ================================================== -->
+<section id="services" class="s-services ss-dark target-section">
+    <div class="shadow-overlay"></div>
+    <div class="row heading-block heading-block--center" data-aos="fade-up">
+        <div class="column large-full">
+            <h2 class="section-heading section-heading--centerbottom">Capabilities</h2>
+            <p class="section-desc"> {{ intro.passion }} </p>
+        </div>
+    </div> <!-- end heading-block -->
+    <div class="row services-list block-large-1-3 block-medium-1-2 block-tab-full">
+        {% for service in services %}
+        <div class="column item-service" data-aos="fade-up">
+            <div class="item-service__content">
+                <h4 class="item-title">{{ service.title }}</h4>
+                <p>
+                    {{ service.get_markdown }}
+                </p>
+            </div>
+            {% if request.user == intro.user %}
+            <p class="entry__tags">
+                <span class="entry__tag-list">
+                    <a href="#">Update</a>
+                    <a href="#">Delete</a>
+                </span>
+            </p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div> <!-- end services-list -->
+    {% if request.user == intro.user %}
+    <p class="entry__tags">
+        <span class="entry__tag-list">
+            <a href="#">Add</a>
+        </span>
+    </p>
+    {% endif %}
+</section> <!-- end s-services -->
+<!-- CTA
+    ================================================== -->
+<section class="s-cta ss-dark">
+    <div class="row heading-block heading-block--center" data-aos="fade-up">
+        <div class="column large-full">
+            <h2 class="section-desc">
+                Need a great reliable internet provider?
+            </h2>
+        </div>
+    </div> <!-- end heading-block -->
+    <div class="row cta-content" data-aos="fade-up">
+        <div class="column large-full">
+            <p>
+                We highly recommend <a href="https://www.ipnxnigeri.net">ipNX Nigeria Limited</a>.
+                Powerful internet strength. Guaranteed.
+                Starting at $2.95 per month.
+            </p>
+            <a href="https://www.ipnxnigeri.net" class="btn full-width">Get Started</a>
+        </div>
+    </div> <!-- end ad-content -->
+</section> <!-- end s-cta -->
+<!-- works
+    ================================================== -->
+<section id="works" class="s-works target-section">
+    <div class="row heading-block heading-block--center" data-aos="fade-up">
+        <div class="column large-full">
+            <h2 class="section-heading section-heading--centerbottom">Selected Works</h2>
+            <p class="section-desc">
+                Here are some of my selected works I have done lately. Feel free to
+                check them out.
+            </p>
+        </div>
+    </div> <!-- end heading-block -->
+    <div class="masonry-wrap">
+        <div class="masonry">
+            <div class="grid-sizer"></div>
+            {% for project in projects %}
+            <div class="masonry__brick" data-aos="fade-up">
+                <div class="item-folio">
+                    <div class="item-folio__thumb">
+                        <a href="{{ project.project_pic.url }}" class="thumb-link" title="Shutterbug" data-size="1050x700">
+                            <img src="{{ project.project_pic.url }}" alt="">
+                        </a>
+                        <a href="https://www.behance.net/" class="item-folio__project-link" title="Project link" target="_blank"></a>
+                    </div>
+                    <div class="item-folio__text">
+                        <h4 class="item-folio__title">
+                            {{ project.title }}
+                        </h4>
+                        <p class="item-folio__cat">
+                            {{ project.category }}
+                        </p>
+                    </div>
+                    <div class="item-folio__caption">
+                        <p>{{ project.get_markdown }}</p>
+                    </div>
+                </div>
+                {% if request.user == intro.user %}
+                <p class="entry__tags">
+                    <span class="entry__tag-list">
+                        <a href="#">Update</a>
+                        <a href="#">Delete</a>
+                    </span>
+                </p>
+                {% endif %}
+            </div> <!-- end masonry__brick -->
+            {% endfor %}
+        </div> <!-- end masonry -->
+        {% if request.user == intro.user %}
+        <p class="entry__tags">
+            <span class="entry__tag-list">
+                <a href="#">Add Project</a>
+            </span>
+        </p>
+        {% endif %}
+    </div> <!-- end masonry-wrap -->
+</section> <!-- end s-work -->
+<!-- testimonies
+    ================================================== -->
+<section class="s-testimonials">
+    <div class="row testimonials" data-aos="fade-up">
+        <div class="column large-full testimonials__slider">
+            {% for testimonial in testimonals %}
+            <div class="testimonials__slide">
+                <p>{{ testimonial.get_markdown }}</p>
+                <div class="testimonials__info">
+                    <img class="testimonials__avatar" src="{% static 'blog/images/avatars/user-01.jpg' %}" alt="{{ post.author }}">
+                    <cite class="testimonials__cite">
+                        <strong>{{ testimonial.recommender_name }}</strong>
+                        <span>{{ testimonial.recommender_office }}</span>
+                    </cite>
+                </div>
+            </div> <!-- end testimonials__slide -->
+            {% if request.user == testimonial.recommender_name %}
+            <p class="entry__tags">
+                <span class="entry__tag-list">
+                    <a href="#">Add</a>
+                    <a href="#">Update</a>
+                    <a href="#">Delete</a>
+                </span>
+            </p>
+            {% endif %}
+            {% endfor %}
+        </div> <!-- end testimonials__slider -->
+    </div> <!-- end testimonials -->
+</section> <!-- end s-testimonials -->
+<!-- contact
+    ================================================== -->
+<section id="contact" class="s-contact ss-dark target-section">
+    <div class="row heading-block" data-aos="fade-up">
+        <div class="column large-full">
+            <h2 class="section-heading">Get In Touch</h2>
+        </div>
+    </div>
+    <div class="row contact-main" data-aos="fade-up">
+        <div class="column large-full">
+            <p class="contact-email">
+                <a href="mailto:{{intro.user.email}}">{{ intro.user.email }}</a>
+            </p>
+            <p class="section-desc">
+                I'm happy to connect, listen and help. Let's work together and build
+                something awesome. Let's turn your idea to an even greater product.
+                <a href="mailto:{{intro.user.email}}">Email Me</a>.
+            </p>
+        </div>
+    </div>
+    <div class="row contact-infos" data-aos="fade-up" data-aos-anchor=".contact-main">
+        <div class="column large-5 medium-full contact-phone">
+            <h4>Call Me</h4>
+            <a href="tel:{{intro.user.profile.phone_number}}">{{ intro.user.profile.phone_number }}</a>
+        </div>
+        <div class="column large-7 medium-full contact-social">
+            <h4>Social</h4>
+            <ul>
+                <li><a href="{{ intro.user.profile.facebook_url }}" title="Facebook">Facebook</a></li>
+                <li><a href="{{ intro.user.profile.twitter_url }}" title="Twitter">Twitter</a></li>
+                <li><a href="{{ intro.user.profile.linkedin_url }}" title="Instagram">Linkedin</a></li>
+            </ul>
+        </div>
+    </div> <!-- end contact-infos -->
+</section> <!-- end s-contact -->
+{% endblock content %}

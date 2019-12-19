@@ -47,12 +47,13 @@
 
    // /* Pretty Print
    //  * -------------------------------------------------- */
-   //  var ssPrettyPrint = function() {
-   //      $('pre').addClass('prettyprint');
-   //      $( document ).ready(function() {
-   //          prettyPrint();
-   //      });
-   //  };
+    var ssPrettyPrint = function() {
+        $('pre').addClass('prettyprint');
+        $('code').addClass('prettyprint');
+        $( document ).ready(function() {
+            PR.prettyPrint();
+        });
+    };
 
    
    /* search
@@ -276,7 +277,7 @@
     (function clInit() {
 
         ssPreloader();
-        // ssPrettyPrint();
+        ssPrettyPrint();
         ssSearch();
         ssMenu();
         ssMasonryFolio();

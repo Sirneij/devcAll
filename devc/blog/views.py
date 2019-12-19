@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.contenttypes.models import ContentType
 from django.template.defaultfilters import slugify
 from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
@@ -13,9 +13,12 @@ from django.contrib.auth.models import User
 from .models import Post, Comment
 from .forms import PostForm, UpdatePostForm, CommentForm
 from django.template.loader import render_to_string
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
 
 def blog_index(request, tag_slug=None):
     object_list = Post.published.all()
+    if request.user.is_staff or request.user.is_superuser:
+        object_list = Post.objects.all()
     common_tags = Post.tags.most_common()[:2]
     tag = None
 
@@ -51,39 +54,39 @@ def post_detail(request, year, month, day, post):
                                   .exclude(id=post.id)
     similar_posts = similar_posts.annotate(same_tags=Count('tags'))\
                                 .order_by('-same_tags','-publish')[:4]
-    comments = Comment.objects.filter(post=post, reply=None).order_by('-id')
-    # next_post = post.get_next_by_publish()
-    # previous_post = post.get_previous_by_publish()
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST or None)
-        if comment_form.is_valid():
-            body = request.POST.get('body')
-            reply_id = request.POST.get('comment_id')
-            comment_qs = None
-            if reply_id:
-                comment_qs = Comment.objects.get(id=reply_id)
-            comment = Comment.objects.create(post=post, author=request.user, body=body, reply=comment_qs)
-            comment.save()
-            return HttpResponseRedirect(post.get_absolute_url())
-    else:
-        comment_form = CommentForm()
-    context = {
-    'post': post, 
-    'similar_posts': similar_posts,
-    # 'next_post': next_post,
-    # 'previous_post': previous_post,
-    'comments': comments,
-    'comment_form': comment_form,
-    # 'is_ovated': is_ovated,
-    'popular_posts': Post.objects.order_by('-hit_count_generic__hits')[:1],
-    #'total_ovations': total_ovations,
-    }
-
+    form = CommentForm(request.POST or None)
+    parent = form['parent'].value()
+    if request.method == "POST":
+        if form.is_valid():
+            temp = form.save(commit=False)
+            temp.post = post
+            temp.author = request.user
+            
+            if parent == '':
+                #Set a blank path then save it to get an ID
+                temp.path = []
+                temp.save()
+                temp.path = [temp.id]
+            else:
+                #Get the parent node
+                node = Comment.objects.get(id=parent)
+                temp.depth = node.depth + 1
+                temp.path = node.path
+                
+                #Store parents path then apply comment ID
+                temp.save()
+                temp.path.append(temp.id)
+                
+            #Final save for parents and children
+            temp.save()
+            return redirect(post.get_absolute_url()) 
+    
+    #Retrieve all comments and sort them by path
+    comment_tree = Comment.objects.filter(post=post).order_by('path')
     if request.is_ajax():
-        html = render_to_string('blog/comments.html', context, request=request)
+        html = render_to_string('comments/index.html', locals(), request=request)
         return JsonResponse({'form': html})
-
-    return render(request, 'blog/post_detail.html', context)
+    return render(request, 'blog/post_detail.html', locals())
 @login_required
 def post_new(request):
     form = PostForm(request.POST, request.FILES)
@@ -124,3 +127,30 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
         if self.request.user == post.author or self.request.user.is_staff:
             return True
         return False
+
+
+class SearchResultsView(generic.ListView):
+    model = Post
+    template_name = 'search/search.html'
+    
+    def get_queryset(self): 
+        query = self.request.GET.get('q')
+        object_list = Post.objects.annotate(
+                similarity=TrigramSimilarity('title', query),
+            ).filter(similarity__gt=0.3).order_by('-similarity')
+        return object_list
+
+# def post_search(request):
+#     query = request.GET.get("q")
+#     results = []
+#     if query:
+#         results = Post.objects.annotate(
+#                 similarity=TrigramSimilarity('title', query),
+#             ).filter(similarity__gt=0.3).order_by('-similarity')
+#         object_list = object_list.filter(
+#                 Q(title__icontains=query)|
+#                 Q(body__icontains=query)|
+#                 Q(author__first_name__icontains=query) |
+#                 Q(author__last_name__icontains=query)
+#                 ).distinct()
+#     return render(request, 'search/search.html', locals())

@@ -33,26 +33,42 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'account',
     'blog',
+    'portfolio',
     'taggit',
     'ckeditor',
     'ckeditor_uploader',
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.postgres',
+    # 'haystack',
 ]
 
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+#         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+#     }
+# }
+# HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 CKEDITOR_UPLOAD_PATH = "/upload/"
 CKEDITOR_CONFIGS = {
+      'awesome_ckeditor': {
+        'toolbar': 'full',
+        'width': '100%',
+        'height': 250,
+       },
 #     # django-ckeditor defaults
      'default': {
           'skin': 'moono',
          # Editor Width Adaptation
-         'width':'80%',
-         'height':'150px',
+         #'width':'80%',
+         #'height':'150px',
          # tab key conversion space number
          'tabSpaces': 4,
          # Toolbar Style
@@ -82,9 +98,11 @@ CKEDITOR_CONFIGS = {
             {'name': 'yourcustomtools', 'items': ['Preview','Maximize']},
         ],
         # Add Code Block Plug-ins
+        'height': 291,
+        'width': '100%',
         # 'filebrowserWindowHeight': 725,
         # 'filebrowserWindowWidth': 940,
-        # 'toolbarCanCollapse': True,
+        'toolbarCanCollapse': True,
         'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'extraPlugins': ','.join([
             'codesnippet', 
@@ -107,7 +125,6 @@ CKEDITOR_CONFIGS = {
             ]),
     }
 }
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -144,8 +161,12 @@ WSGI_APPLICATION = 'devc.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'devc',
+        'USER': 'postgres',
+        'PASSWORD': 'esmeralda@gmail.com',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

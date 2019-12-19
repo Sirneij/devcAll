@@ -1,7 +1,9 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
 from django.utils import timezone
 from django.urls import reverse
 from django.db.models.signals import pre_save
@@ -11,6 +13,7 @@ from .utils import get_read_time
 from django.utils.safestring import mark_safe
 #from django.contrib.contenttypes.fields import GenericRelation
 
+# Create your models here.
 
 class PublishedManager(models.Manager): 
     def get_queryset(self): 
@@ -72,11 +75,11 @@ class Post(models.Model):
     # def total_ovations(self):
     #     return self.ovation.count()
 
-    @property
-    def comments(self):
-        instance = self
-        qs = Comment.objects.filter_by_instance(instance)
-        return qs
+    # @property
+    # def comments(self):
+    #     instance = self
+    #     qs = Comment.objects.filter_by_instance(instance)
+    #     return qs
 
     @property
     def get_content_type(self):
@@ -104,21 +107,35 @@ def pre_save_post_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(pre_save_post_receiver, sender=Post)
 
-class Comment(models.Model): 
+# class Comment(models.Model): 
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+#     author = models.ForeignKey(User, on_delete=models.CASCADE)
+#     reply = models.ForeignKey('Comment', null=True, on_delete=models.CASCADE, related_name='replies')
+#     body = RichTextUploadingField() 
+#     created = models.DateTimeField(auto_now_add=True) 
+#     updated = models.DateTimeField(auto_now=True) 
+#     active = models.BooleanField(default=True) 
+ 
+#     class Meta: 
+#         ordering = ('created',) 
+ 
+#     def __str__(self): 
+#         return 'Comment by {} on {}'.format(self.author.username, self.post.title)
+
+#     def get_markdown(self):
+#         body = self.body
+#         return mark_safe(body)
+class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    reply = models.ForeignKey('Comment', null=True, on_delete=models.CASCADE, related_name='replies')
-    body = RichTextUploadingField() 
-    created = models.DateTimeField(auto_now_add=True) 
-    updated = models.DateTimeField(auto_now=True) 
-    active = models.BooleanField(default=True) 
- 
-    class Meta: 
-        ordering = ('created',) 
- 
-    def __str__(self): 
+    content = RichTextField(config_name='awesome_ckeditor')
+    date = models.DateTimeField(auto_now_add=True)
+    path = ArrayField(models.IntegerField(),blank=True, editable=False)
+    depth = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
         return 'Comment by {} on {}'.format(self.author.username, self.post.title)
 
     def get_markdown(self):
-        body = self.body
-        return mark_safe(body)
+        content = self.content
+        return mark_safe(content)

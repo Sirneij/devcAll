@@ -9,6 +9,6 @@ urlpatterns = [
     path('delete/<slug:slug>/', views.PostDeleteView.as_view(), name='post-delete'),
     path('tag/<slug:tag_slug>/', views.blog_index, name='blog_index_by_tag'),
     # path('feed/', LatestPostsFeed(), name='post_feed'),
-    # path('search/', views.SearchResultsView.as_view(), name='search_results'),
+    path('search/', views.SearchResultsView.as_view(), name='search_results'),
     # path('ovation/', views.ovation, name='ovation'),
 ]

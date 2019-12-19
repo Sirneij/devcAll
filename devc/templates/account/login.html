@@ -25,7 +25,7 @@
                             {% for message in messages %}
                                 <div class="alert-box alert-box--{{ message.tags }} hideit">
                                     {{ message }}
-                                    <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                                    <i class="fa alert-box__close" aria-hidden="true"></i>
                                 </div>
                             {% endfor %}
                         {% endif %}
@@ -36,7 +36,7 @@
                             {% if form.non_field_errors %}
                             <div class="alert-box alert-box--error hideit">
                                 {{ form.non_field_errors }}
-                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                                <i class="fa alert-box__close" aria-hidden="true"></i>
                             </div>
                             {% endif %}
                             {% for field in form %}
@@ -48,7 +48,7 @@
                             {% if field.errors %}
                             <div class="alert-box alert-box--error hideit">
                                 {{ field.errors }}
-                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+                                <i class="fa alert-box__close" aria-hidden="true"></i>
                             </div>
                             {% endif %}
                             {% endfor %}
