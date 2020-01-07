@@ -91,3 +91,64 @@
         -webkit-animation-timing-function-animation-timing-function: ease-out;
     }
 }
+
+.timeline__icon--work {
+  background-image: url(/static/blog/images/portfolio.svg);
+}
+
+.timeline__icon--education {
+  background-image: url(/static/blog/images/mortarboard.svg);
+}
+.entry__tags{
+    position: relative;
+    left: 40%;
+}
+ .entry__tags span {
+    font-weight: 100;
+    color: #025893;
+    padding-right: 25px;
+    margin-right: 1rem;
+    position: relative;
+}
+ .entry__tags span::after {
+    width: 20px;
+    background-color: #025893;
+}
+
+.entry__tags .entry__tag-list a {
+    font-weight: 100;
+    font-size: 1.3rem;
+    color: #025893;
+    border: 1px solid #025893;
+    border-radius: 3px;
+    margin-right: 3px;
+    margin-bottom: 4px;
+    padding: 1px 6px;
+}
+
+.entry__tags .entry__tag-list a:hover,
+.entry__tags .entry__tag-list a:focus {
+    background-color: #025893;
+    border-color: #000000;
+    color: #0ff;
+}
+
+.entry__tags span {
+    color: #025893;
+}
+
+.entry__tags span::after {
+    background-color: #025893;
+}
+
+.entry__tags .entry__tag-list a {
+    color: #025893;
+    border: 1px solid #025893;
+}
+
+.entry__tags .entry__tag-list a:hover,
+.entry__tags .entry__tag-list a:focus {
+    background-color: #025893;
+    border-color: #000000;
+    color: #0ff;
+}
