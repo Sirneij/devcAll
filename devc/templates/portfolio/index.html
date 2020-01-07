@@ -22,6 +22,18 @@
 <!-- about
     ================================================== -->
 <section id="about" class="s-about target-section">
+    {% if messages %}
+        <div class="row">
+            <div class="column large-6 tab-full">
+                {% for message in messages %}
+                <div class="alert-box alert-box--{{ message.tags }} hideit">
+                    {{ message }}
+                    <i class="fa alert-box__close" aria-hidden="true"></i>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     <div class="about-me">
         <div class="row heading-block" data-aos="fade-up">
             <div class="column large-full">
@@ -36,8 +48,7 @@
                 {% if request.user == intro.user %}
                 <p class="entry__tags">
                     <span class="entry__tag-list">
-                        <a href="#">Update</a>
-                        <a href="#">Delete</a>
+                        <a href="{{ intro.user.profile.get_account_absolute_url }}">Update</a>
                     </span>
                 </p>
                 {% endif %}
@@ -154,8 +165,8 @@
             {% if request.user == intro.user %}
             <p class="entry__tags">
                 <span class="entry__tag-list">
-                    <a href="#">Update</a>
-                    <a href="#">Delete</a>
+                    <a href="{% url 'portfolio:service_update' intro.user service.id %}">Update</a>
+                    <a href="{% url 'portfolio:service_delete' intro.user service.id %}">Delete</a>
                 </span>
             </p>
             {% endif %}
@@ -165,7 +176,7 @@
     {% if request.user == intro.user %}
     <p class="entry__tags">
         <span class="entry__tag-list">
-            <a href="#">Add</a>
+            <a href="{% url 'portfolio:service_new' intro.user %}">Add</a>
         </span>
     </p>
     {% endif %}
@@ -230,8 +241,8 @@
                 {% if request.user == intro.user %}
                 <p class="entry__tags">
                     <span class="entry__tag-list">
-                        <a href="#">Update</a>
-                        <a href="#">Delete</a>
+                        <a href="{% url 'portfolio:project_update' intro.user project.id %}">Update</a>
+                        <a href="{% url 'portfolio:project_delete' intro.user project.id %}">Delete</a>
                     </span>
                 </p>
                 {% endif %}
@@ -241,7 +252,7 @@
         {% if request.user == intro.user %}
         <p class="entry__tags">
             <span class="entry__tag-list">
-                <a href="#">Add Project</a>
+                <a href="{% url 'portfolio:project_new' intro.user %}">Add Project</a>
             </span>
         </p>
         {% endif %}

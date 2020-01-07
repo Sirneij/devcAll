@@ -67,6 +67,9 @@ class Project(models.Model):
 	def get_markdown(self):
 		caption = self.caption
 		return mark_safe(caption)
+		
+	def get_absolute_url(self):
+		return reverse('portfolio:portfolio_index',args=[self.user])
 
 class Service(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="service_user")

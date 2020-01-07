@@ -7,7 +7,7 @@ from ckeditor.widgets import CKEditorWidget
 
 class CommentForm(forms.ModelForm):
     #Hidden value to get a child's parent
-    content = forms.CharField(required=True, widget=CKEditorWidget(config_name='awesome_ckeditor'))
+    content = forms.CharField(required=True, widget=forms.Textarea(attrs={'class':'full-width', 'placeholder': ("Enter comment's content...")}))
     parent = forms.CharField(widget=forms.HiddenInput(attrs={'class': 'parent'}), required=False)
     
     class Meta:

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Profile
+from ckeditor.widgets import CKEditorWidget
 from ckeditor.fields import RichTextField
 
 class UserLoginForm(AuthenticationForm):
@@ -47,7 +48,7 @@ class UserEditForm(forms.ModelForm):
 class ProfileEditForm(forms.ModelForm):
     date_of_birth = forms.DateField(required=True, widget=forms.DateInput(attrs={'class': 'full-width'}))
     #profile_pics = forms.FileField(required=True, widget=forms.FileInput(attrs={'class': 'full-width'}))
-    bio = RichTextField()
+    bio = forms.CharField(widget=CKEditorWidget(config_name='awesome_ckeditor'))
     phone_number = forms.CharField(widget=forms.TextInput(attrs={'class':'full-width', 'placeholder': ('Phone number. e.g. +23480612345')}))
     twitter_url = forms.CharField(widget=forms.TextInput(attrs={'class':'full-width', 'placeholder': ('Twitter url. e.g. http://www.twitter.com/sirneij')}))
     facebook_url = forms.CharField(widget=forms.TextInput(attrs={'class':'full-width', 'placeholder': ('Facebook url. e.g. http://www.facebook.com/sirneij')}))

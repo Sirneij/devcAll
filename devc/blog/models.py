@@ -128,7 +128,7 @@ pre_save.connect(pre_save_post_receiver, sender=Post)
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = RichTextField(config_name='awesome_ckeditor')
+    content = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     path = ArrayField(models.IntegerField(),blank=True, editable=False)
     depth = models.PositiveSmallIntegerField(default=0)

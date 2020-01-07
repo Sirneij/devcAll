@@ -58,11 +58,35 @@ INSTALLED_APPS = [
 
 CKEDITOR_UPLOAD_PATH = "/upload/"
 CKEDITOR_CONFIGS = {
-      'awesome_ckeditor': {
-        'toolbar': 'full',
+      'awesome_ckeditor':{
+        # Editor Width Adaptation
         'width': '100%',
-        'height': 250,
-       },
+        'height':'250px',
+        # tab key conversion space number
+        'tabSpaces': 4,
+        # Toolbar Style
+        'toolbar': 'Custom',
+        # Toolbar buttons
+        'toolbar_Custom': [
+            # Emotional Code Block
+            ['Smiley', 'CodeSnippet', 'Source'], 
+            # Font Style
+            ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
+            # Font color
+            ['TextColor', 'BGColor'],
+            #Link link
+            ['Link', 'Unlink'],
+            #List of items
+            ['NumberedList', 'BulletedList'],
+            
+            ['-', 'Outdent', 'Indent', '-', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            #Maximization
+            ['Maximize'],
+        ],
+        # Add Code Block Plug-ins
+        'extraPlugins': ','.join(['codesnippet']),
+    },
 #     # django-ckeditor defaults
      'default': {
           'skin': 'moono',

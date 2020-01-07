@@ -17,6 +17,7 @@ def portfolio_index(request, username):
 
 	return render(request, 'portfolio/index.html', locals())
 
+
 '''
 	Work Experience views - New addition(experience_new), Update(experience_update), and Delete(experience_delete)
 '''
@@ -82,3 +83,71 @@ def education_delete(request, username, id):
 	education.delete()
 	messages.success(request, "Successfully deleted")
 	return redirect(education.get_absolute_url())
+
+'''
+	Service views - New addition(service_new), Update(service_update), and Delete(service_delete)
+'''
+
+def service_new(request, username):
+	intro = get_object_or_404(Introduction, user__username=username)
+	form = ServiceForm(request.POST, request.FILES)
+	if form.is_valid():
+		new_service = form.save(commit=False)
+		new_service.user = request.user
+		new_service.save()
+		messages.success(request, "Service Successfully created.")
+		return HttpResponseRedirect(new_service.get_absolute_url())
+	return render(request, "portfolio/service_form.html", locals())
+
+def service_update(request, username, id):
+	intro = get_object_or_404(Introduction, user__username=username)
+	service = get_object_or_404(Service, user__username=username, id=id)
+	form = ServiceForm(request.POST or None, request.FILES or None, instance=service)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		instance.user = request.user
+		instance.save()
+		messages.success(request, "Service Successfully updated.")
+		return HttpResponseRedirect(instance.get_absolute_url())
+	return render(request, "portfolio/service_form.html", locals())
+
+def service_delete(request, username, id):
+	service = get_object_or_404(Service, user__username=username, id=id)
+	service.delete()
+	messages.success(request, "Successfully deleted")
+	return redirect(service.get_absolute_url())
+
+
+
+'''
+	Project views - New addition(project_new), Update(project_update), and Delete(project_delete)
+'''
+
+def project_new(request, username):
+	intro = get_object_or_404(Introduction, user__username=username)
+	form = ProjectForm(request.POST, request.FILES)
+	if form.is_valid():
+		new_project = form.save(commit=False)
+		new_project.user = request.user
+		new_project.save()
+		messages.success(request, "Project Successfully created.")
+		return HttpResponseRedirect(new_project.get_absolute_url())
+	return render(request, "portfolio/project_form.html", locals())
+
+def project_update(request, username, id):
+	intro = get_object_or_404(Introduction, user__username=username)
+	project = get_object_or_404(Project, user__username=username, id=id)
+	form = ProjectForm(request.POST or None, request.FILES or None, instance=project)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		instance.user = request.user
+		instance.save()
+		messages.success(request, "Project Successfully updated.")
+		return HttpResponseRedirect(instance.get_absolute_url())
+	return render(request, "portfolio/project_form.html", locals())
+
+def project_delete(request, username, id):
+	project = get_object_or_404(Project, user__username=username, id=id)
+	project.delete()
+	messages.success(request, "Successfully deleted")
+	return redirect(project.get_absolute_url())
