@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -58,10 +59,10 @@ INSTALLED_APPS = [
 
 CKEDITOR_UPLOAD_PATH = "/upload/"
 CKEDITOR_CONFIGS = {
-      'awesome_ckeditor':{
+    'awesome_ckeditor': {
         # Editor Width Adaptation
         'width': '100%',
-        'height':'250px',
+        'height': '250px',
         # tab key conversion space number
         'tabSpaces': 4,
         # Toolbar Style
@@ -69,57 +70,64 @@ CKEDITOR_CONFIGS = {
         # Toolbar buttons
         'toolbar_Custom': [
             # Emotional Code Block
-            ['Smiley', 'CodeSnippet', 'Source'], 
+            ['Smiley', 'CodeSnippet', 'Source'],
             # Font Style
             ['Bold', 'Italic', 'Underline', 'RemoveFormat', 'Blockquote'],
             # Font color
             ['TextColor', 'BGColor'],
-            #Link link
+            # Link link
             ['Link', 'Unlink'],
-            #List of items
+            # List of items
             ['NumberedList', 'BulletedList'],
-            
-            ['-', 'Outdent', 'Indent', '-', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+
+            ['-', 'Outdent', 'Indent', '-', 'CreateDiv', '-', 'JustifyLeft',
+                'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
             ['Styles', 'Format', 'Font', 'FontSize'],
-            #Maximization
+            # Maximization
             ['Maximize'],
         ],
         # Add Code Block Plug-ins
         'extraPlugins': ','.join(['codesnippet']),
     },
-#     # django-ckeditor defaults
-     'default': {
-          'skin': 'moono',
-         # Editor Width Adaptation
-         #'width':'80%',
-         #'height':'150px',
-         # tab key conversion space number
-         'tabSpaces': 4,
-         # Toolbar Style
-         'toolbar': 'Custom',
-         # Toolbar buttons
-         'toolbar_Custom': [
-             # Emotional Code Block
-            {'name': 'document', 'items': ['Source', 'CodeSnippet', 'EqnEditor', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'forms','items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton','HiddenField']},
+    #     # django-ckeditor defaults
+    'default': {
+        'skin': 'moono',
+        # Editor Width Adaptation
+        # 'width':'80%',
+        # 'height':'150px',
+        # tab key conversion space number
+        'tabSpaces': 4,
+        # Toolbar Style
+        'toolbar': 'Custom',
+        # Toolbar buttons
+        'toolbar_Custom': [
+            # Emotional Code Block
+            {'name': 'document', 'items': ['Source', 'CodeSnippet', 'EqnEditor',
+                                           '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms', 'items': ['Form', 'Checkbox', 'Radio', 'TextField',
+                                        'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField']},
             '/',
             {'name': 'math', 'items': ['Mathjax', ]},
             {'name': 'basicstyles',
              'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
             {'name': 'paragraph',
              'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft',
-             'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl','Language']},
+                       'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language']},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
-            {'name': 'insert','items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
-            { 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] },
+            {'name': 'insert', 'items': [
+                'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            {'name': 'document', 'groups': ['mode', 'document', 'doctools']},
             # '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'styles', 'items': [
+                'Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
-            {'name': 'yourcustomtools', 'items': ['Preview','Maximize']},
+            {'name': 'yourcustomtools', 'items': ['Preview', 'Maximize']},
         ],
         # Add Code Block Plug-ins
         'height': 291,
@@ -129,9 +137,9 @@ CKEDITOR_CONFIGS = {
         'toolbarCanCollapse': True,
         'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'extraPlugins': ','.join([
-            'codesnippet', 
+            'codesnippet',
             'mathjax',
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'mathjax',
@@ -146,11 +154,12 @@ CKEDITOR_CONFIGS = {
             'dialog',
             'dialogui',
             'elementspath'
-            ]),
+        ]),
     }
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -186,9 +195,9 @@ WSGI_APPLICATION = 'devc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'devc',
-        'USER': 'postgres',
-        'PASSWORD': 'esmeralda@gmail.com',
+        'NAME': 'devc_db',
+        'USER': 'sirneij',
+        'PASSWORD': 'sirneij',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -219,9 +228,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
-    #'social_core.backends.facebook.FacebookOAuth2',
-    #'social_core.backends.twitter.TwitterOAuth',
-    #'social_core.backends.google.GoogleOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.google.GoogleOAuth2',
 ]
 
 # Internationalization
@@ -244,19 +253,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    #'/var/www/static/',
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static")
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
-
 
 
 LOGIN_REDIRECT_URL = 'blog:blog-index'
 LOGIN_URL = 'account:login'
 LOGOUT_URL = 'account:logout'
 LOGOUT_REDIRECT_URL = 'blog:blog-index'
+
+# Heroku: Update database configuration from $DATABASE_URL.
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)

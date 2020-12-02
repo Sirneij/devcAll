@@ -20,6 +20,9 @@
                         {{ field.label }}
                         {{ field }}
                     </div>
+                    {% if field.errors %}
+                    <p class="text-center">{{ field.errors }}</p>
+                    {% endif %}
                     {% endfor %}
                     <input name="submit" id="submit" class="btn btn--small" value="Create Post" type="submit">
                 </fieldset>

@@ -1,0 +1,1 @@
+web: gunicorn devc.wsgi --log-file -

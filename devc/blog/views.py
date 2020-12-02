@@ -10,6 +10,7 @@ from taggit.models import Tag
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.contrib.auth.models import User
+from django.contrib import messages
 from .models import Post, Comment
 from .forms import PostForm, UpdatePostForm, CommentForm
 from django.template.loader import render_to_string
@@ -89,14 +90,21 @@ def post_detail(request, year, month, day, post):
     return render(request, 'blog/post_detail.html', locals())
 @login_required
 def post_new(request):
-    form = PostForm(request.POST, request.FILES)
-    if form.is_valid():
-        newpost = form.save(commit=False)
-        newpost.slug = slugify(newpost.title)
-        # newpost.author = request.user
-        newpost.save()
-        form.save_m2m()
-        return HttpResponseRedirect(newpost.get_absolute_url())
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            newpost = form.save(commit=False)
+            newpost.slug = slugify(newpost.title)
+            # newpost.author = request.user
+            newpost.save()
+            messages.success(
+                request, f'A new post has successfully been added!')
+            return HttpResponseRedirect(newpost.get_absolute_url())
+        else:
+            messages.error(
+                request, f'New post addition has not been successfull..')
+    else:
+        form = PostForm()
     context = {
         "form": form,
     }
