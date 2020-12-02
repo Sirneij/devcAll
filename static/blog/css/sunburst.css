@@ -1,73 +1,74 @@
 code .str,
 pre .str {
-    color: #65B042
+  color: #65b042;
 }
 
 code .kwd,
 pre .kwd {
-    color: #E28964
+  color: #e28964;
 }
 
 code .com,
 pre .com {
-    color: #AEAEAE;
-    font-style: italic
+  color: #aeaeae;
+  font-style: italic;
 }
 
 code .typ,
 pre .typ {
-    color: #89bdff
+  color: #89bdff;
 }
 
 code .lit,
 pre .lit {
-    color: #3387CC
+  color: #3387cc;
 }
 
 code .pln,
 code .pun,
 pre .pln,
 pre .pun {
-    color: #fff
+  color: #fff;
 }
 
 code .tag,
 pre .tag {
-    color: #89bdff
+  color: #89bdff;
 }
 
 code .atn,
 pre .atn {
-    color: #bdb76b
+  color: #bdb76b;
 }
 
 code .atv,
 pre .atv {
-    color: #65B042
+  color: #65b042;
 }
 
 code .dec,
 pre .dec {
-    color: #3387CC
+  color: #3387cc;
 }
 
 code.prettyprint,
 pre.prettyprint {
-    background-color: #292C34;
-    border-radius: 8px
+  background-color: #025893 /*#292c34*/;
+  border-radius: 8px;
 }
 
 pre.prettyprint {
-    width: 95%;
-    margin: 1em auto;
-    padding: 1em;
-    white-space: pre-wrap;
+  width: 100%;
+  margin: 0.5em auto;
+  padding: 0.5em;
+  white-space: pre-wrap;
+  text-justify: auto;
 }
 
 ol.linenums {
-    margin-top: 0;
-    margin-bottom: 0;
-    color: #AEAEAE
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #aeaeae;
 }
 
 li.L0,
@@ -78,62 +79,61 @@ li.L5,
 li.L6,
 li.L7,
 li.L8 {
-    list-style-type: none
+  list-style-type: none;
 }
 
 @media print {
+  code .str,
+  pre .str {
+    color: #060;
+  }
 
-    code .str,
-    pre .str {
-        color: #060
-    }
+  code .kwd,
+  pre .kwd {
+    color: #006;
+    font-weight: 700;
+  }
 
-    code .kwd,
-    pre .kwd {
-        color: #006;
-        font-weight: 700
-    }
+  code .com,
+  pre .com {
+    color: #600;
+    font-style: italic;
+  }
 
-    code .com,
-    pre .com {
-        color: #600;
-        font-style: italic
-    }
+  code .typ,
+  pre .typ {
+    color: #404;
+    font-weight: 700;
+  }
 
-    code .typ,
-    pre .typ {
-        color: #404;
-        font-weight: 700
-    }
+  code .lit,
+  pre .lit {
+    color: #044;
+  }
 
-    code .lit,
-    pre .lit {
-        color: #044
-    }
+  code .pun,
+  pre .pun {
+    color: #440;
+  }
 
-    code .pun,
-    pre .pun {
-        color: #440
-    }
+  code .pln,
+  pre .pln {
+    color: #000;
+  }
 
-    code .pln,
-    pre .pln {
-        color: #000
-    }
+  code .tag,
+  pre .tag {
+    color: #006;
+    font-weight: 700;
+  }
 
-    code .tag,
-    pre .tag {
-        color: #006;
-        font-weight: 700
-    }
+  code .atn,
+  pre .atn {
+    color: #404;
+  }
 
-    code .atn,
-    pre .atn {
-        color: #404
-    }
-
-    code .atv,
-    pre .atv {
-        color: #060
-    }
+  code .atv,
+  pre .atv {
+    color: #060;
+  }
 }

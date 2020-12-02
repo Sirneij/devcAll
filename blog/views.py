@@ -102,8 +102,8 @@ def post_new(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             newpost = form.save(commit=False)
+            newpost.author = request.user
             newpost.slug = slugify(newpost.title)
-            # newpost.author = request.user
             newpost.save()
             messages.success(
                 request, f'A new post has successfully been added!')

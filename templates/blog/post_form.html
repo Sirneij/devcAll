@@ -1,33 +1,46 @@
 {% extends 'base.html' %}
-{% block header %}{% endblock header %}
+<!-- header -->
+{% block header %} {% endblock header %}
+<!-- content -->
 {% block content %}
 <!-- site content
         ================================================== -->
 <div class="s-content content">
-    <main class="row content__page">
-        <section class="column large-full entry format-standard">
-            <div class="content__page-header">
-                <h1 class="display-1">
-                    Write A Post.
-                </h1>
-            </div> <!-- end content__page-header -->
-            <form name="contactForm" id="contactForm" method="post" action="" autocomplete="on" enctype="multipart/form-data">
-                {% csrf_token %}
-                <fieldset>
-                    {% for field in form %}
-                    <div class="form-field">
-                        {{ form.media }}
-                        {{ field.label }}
-                        {{ field }}
-                    </div>
-                    {% if field.errors %}
-                    <p class="text-center">{{ field.errors }}</p>
-                    {% endif %}
-                    {% endfor %}
-                    <input name="submit" id="submit" class="btn btn--small" value="Create Post" type="submit">
-                </fieldset>
-            </form> <!-- end form -->
-        </section>
-    </main>
-</div> <!-- end s-content -->
+  <main class="row content__page">
+    <section class="column large-full entry format-standard">
+      <div class="content__page-header">
+        <h1 class="display-1">Write A Post.</h1>
+      </div>
+      <!-- end content__page-header -->
+      <form
+        name="contactForm"
+        id="contactForm"
+        method="post"
+        action=""
+        autocomplete="on"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <fieldset>
+          {% for field in form %}
+          <div class="form-field">
+            {{ form.media }} {{ field.label }} {{ field }}
+          </div>
+          {% if field.errors %}
+          <p class="text-center">{{ field.errors }}</p>
+          {% endif %} {% endfor %}
+          <input
+            name="submit"
+            id="submit"
+            class="btn btn--small"
+            value="Create Post"
+            type="submit"
+          />
+        </fieldset>
+      </form>
+      <!-- end form -->
+    </section>
+  </main>
+</div>
+<!-- end s-content -->
 {% endblock content %}

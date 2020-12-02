@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}DevC - {{ post.title }}{% endblock %}
+{% block header %} <meta name="author" content="{{post.author}}" />{% endblock header %}
 {% block content %}
 {% load humanize %}
 {% load static %}
-<!-- site content
-        ================================================== -->
+<!-- site content ================================================== -->
 <div class="s-content content">
     <main class="row content__page">
         <article class="column large-full entry format-standard">
@@ -53,11 +53,12 @@
                     <span class="entry__tag-list">
                         <span>Category</span>
                         <a href="#0">{{ post.category.name }}</a>
-                        {% if user.is_staff %}
+                        {% if request.user.is_staff %}
                         <span>Modification</span>
                         <a href="{% url 'blog:post-update' post.slug %}">Update</a>
                         <a href="{% url 'blog:post-delete' post.slug %}">Delete</a>
-                        {% elif post.author == user %}
+                        {% elif post.author == request.user %}
+                        <span>Modification</span>
                         <a href="{% url 'blog:post-update' post.slug %}">Update</a>
                         <a href="{% url 'blog:post-delete' post.slug %}">Delete</a>
                         {% endif %}
@@ -92,20 +93,17 @@
                         <h4><a href="{% url 'portfolio:portfolio_index' post.author %}">{{ post.author.get_full_name }}</a></h4>
                         {% else %}
                         <h4>
-                            {% if user == post.author %}
                             <a href="{% url 'portfolio:portfolio_index' post.author %}">{{ post.author }}</a>
-                            {% else %}
-                            <a href="{% url 'portfolio:portfolio_index' post.author %}">{{ post.author }}</a>
-                            {% endif %}
                         </h4>
                         {% endif %}
                         {% if post.author.profile.bio %}
-                        <p style="text-align: justify;">{{ post.author.profile.bio|safe|truncatechars_html:120 }}
-                            {% if user == post.author %}
+                        <p style="text-align: justify;">
+                            {{ post.author.profile.bio|safe|truncatechars_html:120 }}
+                            {% if request.user == post.author %}
                             <a class="display" href="{{ post.author.profile.get_account_absolute_url }}">Check out and/or edit your profile...</a></p>
-                        {% else %}
-                        <a class="display" href="{% url 'portfolio:portfolio_index' post.author %}">Check out {{ post.author.get_full_name }}'s portfolio...</a></p>
-                        {% endif %}
+                            {% else %}
+                            <a class="display" href="{% url 'portfolio:portfolio_index' post.author %}">Check out {{ post.author.get_full_name }}'s portfolio...</a></p>
+                            {% endif %}
                         {% else %}
                         <p style="text-align: justify;"></p>
                         {% endif %}

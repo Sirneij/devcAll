@@ -22,11 +22,11 @@ class PostForm(forms.ModelForm):
         attrs={'class': ('full-width'), 'placeholder': ("Enter post's title")}))
     body = RichTextUploadingField()
     publish = forms.DateField(widget=forms.DateInput(
-        attrs={'placeholder': 'Date of this form 2020-07-29'}))
+        attrs={'placeholder': 'Date e.g. 2020-07-29', 'type': 'date'}))
 
     class Meta:
         model = Post
-        fields = ['title', 'author', 'image', 'category',
+        fields = ['title', 'image', 'category',
                   'body', 'publish', 'status', 'tags', ]
 
 
