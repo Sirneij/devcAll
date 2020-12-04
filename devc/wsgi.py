@@ -11,10 +11,10 @@ import os
 from django.conf import settings
 
 from django.core.wsgi import get_wsgi_application
-if settings.DEBUG:
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'devc.settings.dev')
-else:
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+# if settings.DEBUG:
+#     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'devc.settings.dev')
+# else:
+os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                           'devc.settings.production')
 
 #os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'devc.settings')
