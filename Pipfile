@@ -42,6 +42,9 @@ service_identity = "==18.1.0"
 dj-database-url = "*"
 gunicorn = "*"
 whitenoise = "*"
+boto3 = "*"
+django-storages = "*"
+python-decouple = "*"
 
 [requires]
 python_version = "3.8"

@@ -21,7 +21,7 @@ from . import search
 
 def blog_index(request, tag_slug=None):
     object_list = Post.published.all()
-    if request.user.is_staff or request.user.is_superuser:
+    if request.user.is_staff:
         object_list = Post.objects.all()
     common_tags = Post.tags.most_common()[:2]
     tag = None
@@ -101,10 +101,13 @@ def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
+            tags = form.cleaned_data.get("tags")
             newpost = form.save(commit=False)
+            newpost.tags = tags
             newpost.author = request.user
             newpost.slug = slugify(newpost.title)
             newpost.save()
+            print(f"Tags are: {newpost.tags}")
             messages.success(
                 request, f'A new post has successfully been added!')
             return HttpResponseRedirect(newpost.get_absolute_url())

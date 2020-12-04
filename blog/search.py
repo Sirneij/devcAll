@@ -64,7 +64,7 @@ def posts(search_text):
     # iterate through keywords
     for word in words:
         posts = products.filter(Q(title__icontains=word)
-                                | Q(body__icontains=word))
+                                | Q(body__icontains=word) | Q(author__username__icontains=word))
         results['posts'] = posts
     return results
 
