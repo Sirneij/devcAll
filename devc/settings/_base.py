@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'taggit',
     'ckeditor',
     'ckeditor_uploader',
+    'storages',
     'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
-    # 'haystack',
 ]
 
 
@@ -246,3 +246,8 @@ POSTS_PER_PAGE = 12
 
 
 POSTS_PER_ROW = 4
+
+
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
