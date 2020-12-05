@@ -18,7 +18,7 @@ STATICFILES_STORAGE = 'devc.storage_backends.StaticStorage'
 # s3 public media settings
 PUBLIC_MEDIA_LOCATION = 'media'
 MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.us-east-2.amazonaws.com/{PUBLIC_MEDIA_LOCATION}/'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'devc.storage_backends.PublicMediaStorage'
 
 # Heroku: Update database configuration from $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
