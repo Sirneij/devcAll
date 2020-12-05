@@ -5,7 +5,7 @@ log.*
 db.*
 *.__pycache__
 *.pyc
-# *migrations
+*migrations
 #Environment variables
 *.env
 .DS_Store
