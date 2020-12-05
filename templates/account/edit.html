@@ -1,101 +1,132 @@
-{% extends 'base.html' %}
-{% block title %}DevC{% endblock %}
-{% block content %}
-{% load static %}
+{% extends 'base.html' %} {% block title %}DevC{% endblock %} {% block content
+%} {% load static %}
 <div class="s-content">
-    <div class="masonry-wrap">
-        <div class="masonry">
-            <div class="grid-sizer"></div>
-            
-            <article class="masonry__brick entry format-standard animate-this">
-                <div class="entry__thumb">
-                    {% if user.profile.profile_pics %}
-                    <img src="{{ user.profile.profile_pics.url }}" alt="">
-                    {% endif %}
-                </div>
-                <div class="entry__text">
-                    <h1 class="display-1 entry__title">
-                        {% if user.get_full_name %} {{ user.get_full_name }} {% else %} {{ user.username }}
-                        {% endif %} | {{ user.email }} | {{ user.profile.date_of_birth }}
-                    </h1>
-                   <div class="author-profile">
+  <div class="masonry-wrap">
+    <div class="masonry">
+      <div class="grid-sizer"></div>
 
-                    <ul class="author-social">
-                            <li>
-                                <a href="{{ user.profile.facebook_url }}">
-                                    <img src="{% static 'blog/images/facebook.svg' %}" alt="facebook">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ user.profile.github_url }}">
-                                    <img src="{% static 'blog/images/github.svg' %}" alt="github">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ user.profile.linkedin_url }}">
-                                    <img src="{% static 'blog/images/linkedin.svg' %}" alt="Linkedin">
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ user.profile.twitter_url }}">
-                                    <img src="{% static 'blog/images/twitter.svg' %}" alt="twitter">
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="about">
-                        {% if user.profile.bio %}
-                        <p style="text-align: justify;">{{ user.profile.bio|safe }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-            </article> <!-- end article -->
-            <article class="masonry__brick entry format-standard animate-this">
-                <div class="entry__text">
-                    <h1 class="display-1 entry__title">
-                        Update Your Account
-                    </h1>
-                     <form name="contactForm" id="contactForm" method="post" action="" autocomplete="on" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <fieldset>
-                            {% if user_form.non_field_errors or profile_form.non_field_errors %}
-                            <div class="alert-box alert-box--error hideit">
-                                {{ user_form.non_field_errors }}
-                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
-                            </div>
-                            {% endif %}
-                            {% for field in user_form %}
-                            <div class="form-field">
-                                {{ form.media }}
-                                {# {{ field.label }} #}
-                                {{ field }}
-                            </div>
-                            {% if field.errors %}
-                            <div class="alert-box alert-box--error hideit">
-                                {{ field.errors }}
-                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
-                            </div>
-                            {% endif %}
-                            {% endfor %}
-                            {% for field in profile_form %}
-                            <div class="form-field">
-                                {{ form.media }}
-                                {# {{ field.label }} #}
-                                {{ field }}
-                            </div>
-                            {% if field.errors %}
-                            <div class="alert-box alert-box--error hideit">
-                                {{ field.errors }}
-                                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
-                            </div>
-                            {% endif %}
-                            {% endfor %}
-                            <input name="submit" id="submit" class="btn btn--small" value="Update" type="submit">
-                        </fieldset>
-                    </form> <!-- end form -->
-                </div>
-            </article> <!-- end article -->
-        </div> <!-- end masonry -->
-    </div> <!-- end masonry-wrap -->
-</div> <!-- end s-content -->
+      <article class="masonry__brick entry format-standard animate-this">
+        <div class="entry__thumb">
+          {% if request.user.profile.profile_pics %}
+          <img src="{{ request.user.profile.profile_pics.url }}" alt="" />
+          {% endif %}
+        </div>
+        <div class="entry__text">
+          <h1 class="display-1 entry__title">
+            {% if request.user.get_full_name %}
+            <!-- fullname -->
+            {{ request.user.get_full_name }}
+            <!-- else -->
+            {% else %}
+            <!-- username -->
+            {{ request.user.username }}
+            <!-- else -->
+            {% endif %} |
+            <!-- email -->
+            {{ request.user.email }} |
+            <!-- dob -->
+            {{ request.user.profile.date_of_birth }}
+          </h1>
+          <div class="author-profile">
+            <ul class="author-social">
+              <li>
+                <a href="{{ request.user.profile.facebook_url }}">
+                  <img
+                    src="{% static 'blog/images/facebook.svg' %}"
+                    alt="facebook"
+                  />
+                </a>
+              </li>
+              <li>
+                <a href="{{ request.user.profile.github_url }}">
+                  <img
+                    src="{% static 'blog/images/github.svg' %}"
+                    alt="github"
+                  />
+                </a>
+              </li>
+              <li>
+                <a href="{{ request.user.profile.linkedin_url }}">
+                  <img
+                    src="{% static 'blog/images/linkedin.svg' %}"
+                    alt="Linkedin"
+                  />
+                </a>
+              </li>
+              <li>
+                <a href="{{ request.user.profile.twitter_url }}">
+                  <img
+                    src="{% static 'blog/images/twitter.svg' %}"
+                    alt="twitter"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="about">
+            {% if request.user.profile.bio %}
+            <p style="text-align: justify">
+              {{ request.user.profile.bio|safe }}
+            </p>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      <!-- end article -->
+      <article class="masonry__brick entry format-standard animate-this">
+        <div class="entry__text">
+          <h1 class="display-1 entry__title">Update Your Account</h1>
+          <form
+            name="contactForm"
+            id="contactForm"
+            method="post"
+            action=""
+            autocomplete="on"
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %}
+            <fieldset>
+              {% if user_form.non_field_errors or profile_form.non_field_errors %}
+              <div class="alert-box alert-box--error hideit">
+                {{ user_form.non_field_errors }}
+                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+              </div>
+              {% endif %} {% for field in user_form %}
+              <div class="form-field">
+                {{ form.media }} {# {{ field.label }} #} {{ field }}
+              </div>
+              {% if field.errors %}
+              <div class="alert-box alert-box--error hideit">
+                {{ field.errors }}
+                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+              </div>
+              {% endif %} {% endfor %} {% for field in profile_form %}
+              <div class="form-field">
+                {{ form.media }} {# {{ field.label }} #} {{ field }}
+              </div>
+              {% if field.errors %}
+              <div class="alert-box alert-box--error hideit">
+                {{ field.errors }}
+                <i class="fa fa-times alert-box__close" aria-hidden="true"></i>
+              </div>
+              {% endif %} {% endfor %}
+              <input
+                name="submit"
+                id="submit"
+                class="btn btn--small"
+                value="Update"
+                type="submit"
+              />
+            </fieldset>
+          </form>
+          <!-- end form -->
+        </div>
+      </article>
+      <!-- end article -->
+    </div>
+    <!-- end masonry -->
+  </div>
+  <!-- end masonry-wrap -->
+</div>
+<!-- end s-content -->
 {% endblock content %}

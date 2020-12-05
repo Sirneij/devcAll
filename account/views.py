@@ -8,12 +8,6 @@ from .forms import UserLoginForm, UserRegistrationForm, \
 from .models import Profile
 from portfolio.models import Introduction
 
-# @login_required
-# def dashboard(request):
-#     return render(request,
-#                   'account/dashboard.html',
-#                   {'section': 'dashboard'})
-
 
 def register(request):
     if request.method == 'POST':
@@ -21,8 +15,6 @@ def register(request):
         if user_form.is_valid():
             new_user = user_form.save(commit=False)
             user_form.save()
-            username = user_form.cleaned_data.get('username')
-            email = user_form.cleaned_data.get('email')
             messages.success(
                 request, f'Your account has been created! You are now able to log in')
             Profile.objects.create(user=new_user)

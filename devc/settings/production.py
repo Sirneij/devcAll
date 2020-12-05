@@ -14,11 +14,11 @@ AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 # s3 static settings
 STATIC_LOCATION = 'static'
 STATIC_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.us-east-2.amazonaws.com/{STATIC_LOCATION}/'
-STATICFILES_STORAGE = 'blog.storage_backends.StaticStorage'
+STATICFILES_STORAGE = 'devc.storage_backends.StaticStorage'
 # s3 public media settings
 PUBLIC_MEDIA_LOCATION = 'media'
 MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.us-east-2.amazonaws.com/{PUBLIC_MEDIA_LOCATION}/'
-DEFAULT_FILE_STORAGE = 'blog.storage_backends.PublicMediaStorage'
+DEFAULT_FILE_STORAGE = 'devc.storage_backends.PublicMediaStorage'
 
 # Heroku: Update database configuration from $DATABASE_URL.
 db_from_env = dj_database_url.config(conn_max_age=500)
