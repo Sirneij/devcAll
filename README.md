@@ -19,3 +19,7 @@
   tem where authors of post(s) showcase their skills to their potential recruiters. It
   structures authors profiles, education, skills, projects and recommendations accord­
   ingly which can be downloaded in Portable Document Format (PDF)
+
+# Local testing
+
+To run this piece of software locally, two files need to be taken care of - `wsgi.py` and `manage.py`.
